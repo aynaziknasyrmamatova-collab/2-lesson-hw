@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Books
+from .models import Movies
 # Register your models here.
-@admin.register(Books)
-class AdminBooks(admin.ModelAdmin):
-    list_display=('id','author', "title",'description', 'price' ,'year', 'image')
-    search_fields= ('title', 'author')
+@admin.register(Movies)
+class AdminMovies(admin.ModelAdmin):
+    list_display=("id",'author','name','description','year','company')
+    search_fields=('name','author')
