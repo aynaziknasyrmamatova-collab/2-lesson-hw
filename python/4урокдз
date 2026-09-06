@@ -1,0 +1,62 @@
+#1 задание
+a=int(input("Введите первое число: "))
+b=int(input("Введите второе число: "))
+if a>b:
+    print(a)
+else:
+    print(b)
+
+
+#2 задание
+
+number=int(input("Введите любое число: "))
+if number%2==0:
+    print("Оно является четным: ")
+
+
+#3 задание
+
+cities=["Москва", "Бишкек", "Ош", "Рим", "Париж"]
+print(cities,1)
+print(cities, 3)
+
+
+#4 задание
+
+
+names=["Каролина", "Маша", "Петя", "Ксюша"]
+names.insert(0,"Миша")
+
+
+#5 задание
+
+numbers=[10,20,30,40,50]
+numbers.remove(20)
+print(numbers)
+
+
+#6 задание
+
+tuple_countries= ("Кыргызстан", "Америка", "Италия", "Испания", "Турция")
+print(tuple_countries, 0)
+print(tuple_countries, 4)
+
+
+#7 задание
+
+grade=int(input("Введите оценку от 1 до 5: "))
+if grade==5:
+    print("Отлично")
+elif grade==4:
+    print("Хорошо")
+elif grade==3:
+    print("Удовлеторительно")
+else:
+    print("Неудовлетворительно")
+
+
+#8 задание
+
+it=["Python", "Java", "C++", "Javascript"]
+print(it)
+print(it.index("C++"))

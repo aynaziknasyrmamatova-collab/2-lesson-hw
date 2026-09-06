@@ -1,0 +1,42 @@
+{% extends 'lesson2/base.html' %}
+
+{% block title %}Список книг — ListView (Урок 2){% endblock %}
+
+{% block content %}
+    <h1>📚 Список книг (ListView)</h1>
+
+    <div class="hint-box">
+        💡 <strong>Как работает ListView:</strong><br>
+        1. В <code>views.py</code> мы указали <code>model = Books</code>.<br>
+        2. Django сам выполнил: <code>Books.objects.all()</code>.<br>
+        3. И передал все книги в этот шаблон под именем <code>books</code>.<br>
+        4. Здесь мы просто перебираем их циклом <code>&#123;% for book in books %&#125;</code>!
+    </div>
+
+    {% if books %}
+        {% for book in books %}
+            <div class="card">
+                <div class="card-meta">
+                    ✍️ Автор: <strong>{{ book.author }}</strong> | 
+                    📅 Дата издания: {{ book.year|date:"d.m.Y" }}
+                </div>
+                
+                <h2 class="card-title">{{ book.title }}</h2>
+                
+                {% if book.description %}
+                    <p class="card-desc">{{ book.description|truncatewords:25 }}</p>
+                {% endif %}
+                
+                <p style="color: #16a34a; font-weight: 700; margin: 10px 0 15px 0;">
+                    💰 Цена: {{ book.price }} сом
+                </p>
+
+                <a href="{% url 'book_detail' book.pk %}" class="btn">
+                    Подробнее о книге (ID: {{ book.pk }}) &rarr;
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Книг пока нет. Добавьте их через админку: <a href="/admin/">/admin/</a></p>
+    {% endif %}
+{% endblock %}

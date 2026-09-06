@@ -1,0 +1,52 @@
+[%-06-26 17:26:16]Создан новый пользователь
+[%-06-26 17:26:18]Создан новый заказ
+[%-06-26 17:26:47]Сервер остановлен
+[%-06-26 17:33:09]Создан новый заказ
+[%-06-26 17:50:40]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:42]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:43]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:44]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:44]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:45]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:50:47]Пользователь вышел из аккаунта
+[%-06-26 17:50:48]Неизветсная команда
+[%-06-26 17:50:48]Пользователь вышел из аккаунта
+[%-06-26 17:50:49]Пользователь вышел из аккаунта
+[%-06-26 17:50:49]Пользователь вышел из аккаунта
+[%-06-26 17:50:49]Пользователь вышел из аккаунта
+[%-06-26 17:50:50]Пользователь вышел из аккаунта
+[%-06-26 17:51:07]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:08]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:09]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:09]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:09]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:10]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:10]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:10]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:11]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:12]Неизветсная командаC:\Users\Ainazik\AppData\Local\Programs\Python\Python314\python.exe c:/Users/Ainazik/Desktop/python/menu.py
+[%-06-26 17:51:15]Неизветсная командаclear
+[%-06-26 17:51:20]Неизветсная командаclear
+[%-06-26 17:51:20]Неизветсная команда
+[%-06-26 17:51:21]Неизветсная команда
+[%-06-26 17:51:21]Неизветсная команда
+[%-06-26 17:51:21]Неизветсная команда
+[%-06-26 17:51:29]Сервер остановлен
+[%-06-26 17:54:56]Пользователь завершил программу
+[%-06-26 17:55:20]Пользователь вывел содержимое данных
+[%-06-26 17:56:46]Пользователь завершил программу
+[%-06-26 17:56:51]Пользователь завершил программу
+[%-06-26 17:56:52]Пользователь завершил программу
+[%-06-26 17:56:53]Пользователь завершил программу
+[%-06-26 17:56:53]Пользователь завершил программу
+[%-06-26 17:56:54]Пользователь завершил программу
+[%-06-26 17:56:54]Пользователь завершил программу
+[%-06-26 17:57:11]Пользователь завершил программу
+[%-06-26 17:57:12]Пользователь завершил программу
+[%-06-26 17:57:13]Пользователь завершил программу
+[%-06-26 17:57:14]Пользователь завершил программу
+[%-06-26 17:57:23]Пользователь завершил программу
+[%-06-26 17:57:50]Пользователь завершил программу
+[%-06-26 17:58:34]Пользователь завершил программу
+[%-06-26 18:00:02]Пользователь завершил программу
+[%-06-29 20:14:15]Пользователь выбрал расход

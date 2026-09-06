@@ -1,0 +1,44 @@
+{% extends 'lesson2/base.html' %}
+
+{% block title %}{{ book.title }} — DetailView (Урок 2){% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'book_list' %}" class="btn btn-back">&larr; Назад ко всем книгам</a>
+    </div>
+
+    <div class="hint-box">
+        🔍 <strong>Как сработал DetailView:</strong><br>
+        1. Из ссылки в браузере Django взял ID: <code>pk = {{ book.pk }}</code>.<br>
+        2. Сам выполнил поиск в базе: <code>Books.objects.get(pk={{ book.pk }})</code>.<br>
+        3. Если бы книги с таким ID не существовало — Django сам показал бы ошибку <strong>404 Не найдено</strong>.<br>
+        4. Найденный объект передан в шаблон под именем <code>book</code>.
+    </div>
+
+    <article>
+        <h1>{{ book.title }}</h1>
+        
+        <div class="card-meta">
+            ✍️ Автор: <strong>{{ book.author }}</strong> | 
+            📅 Дата: {{ book.year|date:"d.m.Y" }} | 
+            🆔 ID книги: <strong>{{ book.pk }}</strong>
+        </div>
+
+        <div style="font-size: 20px; color: #16a34a; font-weight: 700; margin: 15px 0;">
+            💰 Цена: {{ book.price }} сом
+        </div>
+
+        {% if book.image %}
+            <div style="margin: 20px 0;">
+                <img src="{{ book.image.url }}" alt="{{ book.title }}" style="max-width: 280px; border-radius: 8px;">
+            </div>
+        {% endif %}
+
+        {% if book.description %}
+            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #64748b; line-height: 1.7;">
+                <strong>Описание:</strong><br>
+                {{ book.description }}
+            </div>
+        {% endif %}
+    </article>
+{% endblock %}
