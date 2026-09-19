@@ -1,0 +1,248 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{settings.title}} — {{settings.descriptions}}</title>
+  <meta name="description" content="Geeks Hotel — минималистичный бутик-отель: 48 номеров, спа, ресторан и панорамный бассейн.">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header class="header">
+    <div class="wrap header-inner">
+      <a href="index.html" class="logo">GEEKS<span>.</span></a>
+
+      <button class="burger" aria-label="Меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav">
+        <a href="index.html" class="active">Главная</a>
+        <a href="rooms.html">Номера</a>
+        <a href="contact.html">Контакты</a>
+        <a href="contact.html" class="btn btn-primary">Забронировать</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ПЕРВЫЙ ЭКРАН -->
+  <section class="hero">
+    <img src="{% static 'images/hero.jpg' %}" alt="Бассейн и терраса отеля на закате" class="hero-bg">
+    <div class="wrap">
+      <div class="hero-content">
+        <span class="eyebrow">Бутик-отель · 5 звёзд</span>
+        <h1>Тишина, море<br>и ничего лишнего</h1>
+        <p>48 номеров в двух шагах от побережья. Панорамный бассейн, спа и ресторан авторской кухни — всё в одном месте.</p>
+        <div class="hero-actions">
+          <a href="contact.html" class="btn btn-primary">Забронировать номер</a>
+          <a href="rooms.html" class="btn btn-light">Смотреть номера</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРЕИМУЩЕСТВА -->
+  <section>
+    <div class="wrap">
+      <div class="features reveal">
+        <article class="feature">
+          <span class="num">01</span>
+          <h3>Первая линия</h3>
+          <p>120 метров до собственного пляжа с шезлонгами и полотенцами.</p>
+        </article>
+        <article class="feature">
+          <span class="num">02</span>
+          <h3>Спа и бассейн</h3>
+          <p>Хаммам, сауна и панорамный бассейн с подогревом — круглый год.</p>
+        </article>
+        <article class="feature">
+          <span class="num">03</span>
+          <h3>Завтрак включён</h3>
+          <p>Шведский стол с 7:00 до 11:00 и room-service до полуночи.</p>
+        </article>
+        <article class="feature">
+          <span class="num">04</span>
+          <h3>Приём 24/7</h3>
+          <p>Ранний заезд, трансфер от аэропорта и консьерж в любое время.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- О ОТЕЛЕ -->
+  <section class="section-alt">
+    <div class="wrap split reveal">
+      <div>
+        <span class="eyebrow">Об отеле</span>
+        <h2>Спокойная архитектура и много света</h2>
+        <p style="color:var(--gray); margin-top:16px;">
+          Aurora открылся в 2014 году и с тех пор держится одного принципа: минимум декора,
+          максимум воздуха. Белые стены, дерево и натуральный текстиль, панорамные окна
+          в каждом номере и вид на сад или море.
+        </p>
+        <p style="color:var(--gray); margin-top:12px;">
+          Мы небольшие — и поэтому помним ваше имя, любимый столик и время завтрака.
+        </p>
+        <div class="stats">
+          <div class="stat"><b>48</b><span>номеров</span></div>
+          <div class="stat"><b>9.4</b><span>рейтинг гостей</span></div>
+          <div class="stat"><b>12</b><span>лет работы</span></div>
+        </div>
+      </div>
+      <div class="split-img">
+        <img src="{% static 'images/about.jpg'%}" alt="Внутренний двор отеля с бассейном и пальмами">
+      </div>
+    </div>
+  </section>
+
+  <!-- НОМЕРА (превью) -->
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Размещение</span>
+        <h2>Три категории номеров</h2>
+        <p>От компактного стандарта до люкса с террасой. Во всех номерах — кондиционер, Wi-Fi, сейф и мини-бар.</p>
+      </div>
+
+      <div class="rooms-grid reveal">
+        <article class="room-card">
+          <div class="room-media">
+            <span class="badge">Хит</span>
+            <img src="{% static 'images/room-standard.jpg' %}" alt="Стандартный номер с двуспальной кроватью">
+          </div>
+          <div class="room-body">
+            <h3>Standard</h3>
+            <p>24 м², двуспальная кровать, рабочий стол и вид на сад.</p>
+            <div class="room-meta">
+              <span class="tag">2 гостя</span>
+              <span class="tag">24 м²</span>
+              <span class="tag">Завтрак</span>
+            </div>
+            <div class="room-foot">
+              <div class="price"><b>12 000 сом</b> <span>/ ночь</span></div>
+              <a href="rooms.html" class="btn btn-ghost">Подробнее</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="room-card">
+          <div class="room-media">
+            <img src="{% static 'images/room-deluxe.jpg'%}" alt="Номер делюкс с выходом в сад">
+          </div>
+          <div class="room-body">
+            <h3>Deluxe</h3>
+            <p>34 м², king-size кровать, зона отдыха и выход в сад.</p>
+            <div class="room-meta">
+              <span class="tag">3 гостя</span>
+              <span class="tag">34 м²</span>
+              <span class="tag">Балкон</span>
+            </div>
+            <div class="room-foot">
+              <div class="price"><b>19 500 сом</b> <span>/ ночь</span></div>
+              <a href="rooms.html" class="btn btn-ghost">Подробнее</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="room-card">
+          <div class="room-media">
+            <img src="{% static 'images/room-suite.jpg' %}" alt="Люкс с отдельной гостиной">
+          </div>
+          <div class="room-body">
+            <h3>Suite</h3>
+            <p>52 м², спальня и гостиная, терраса с видом на море.</p>
+            <div class="room-meta">
+              <span class="tag">4 гостя</span>
+              <span class="tag">52 м²</span>
+              <span class="tag">Терраса</span>
+            </div>
+            <div class="room-foot">
+              <div class="price"><b>31 000 сом</b> <span>/ ночь</span></div>
+              <a href="rooms.html" class="btn btn-ghost">Подробнее</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ГАЛЕРЕЯ -->
+  <section class="section-alt">
+    <div class="wrap">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Галерея</span>
+        <h2>Как у нас</h2>
+        <p>Нажмите на фотографию, чтобы открыть её крупно.</p>
+      </div>
+
+      <div class="gallery reveal">
+        <figure data-lightbox><img src="{% static 'images/pool.jpg' %}" alt="Бассейн с видом на море вечером"></figure>
+        <figure data-lightbox><img src="{% static 'images/restaurant.jpg' %}" alt="Подача блюда в ресторане отеля"></figure>
+        <figure data-lightbox><img src="{% static 'images/terrace.jpg' %}" alt="Шезлонги на террасе с видом на горы"></figure>
+        <figure data-lightbox><img src="{% static 'images/gallery3.jpg' %}" alt="Бассейн и деревянный настил у моря"></figure>
+        <figure data-lightbox><img src="{% static 'images/spa.jpg' %}" alt="Спа-принадлежности: полотенце, свеча и цветы"></figure>
+        <figure data-lightbox><img src="{% static 'images/gallery1.jpg' %}" alt="Просторный номер с панорамными окнами"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРИЗЫВ К ДЕЙСТВИЮ -->
+  <section class="cta">
+    <img src="{% static 'images/gallery2.jpg' %}" alt="" class="hero-bg">
+    <div class="wrap">
+      <span class="eyebrow" style="color:#fff;">Раннее бронирование</span>
+      <h2>−15% при заезде до 1 декабря</h2>
+      <p>Забронируйте напрямую на сайте: скидка применяется автоматически, отмена бесплатная за 48 часов.</p>
+      <a href="contact.html" class="btn btn-light">Забронировать</a>
+    </div>
+  </section>
+
+  <!-- ПОДВАЛ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="logo">GEEKS<span>.</span></a>
+          {{settings.logo.url}}
+          <p style="margin-top:14px; max-width:320px;">
+            Бутик-отель на побережье: 48 номеров, спа, ресторан и панорамный бассейн.
+          </p>
+        </div>
+        <div>
+          <h4>Разделы</h4>
+          <ul>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="rooms.html">Номера</a></li>
+            <li><a href="contact.html">Контакты</a></li>
+            <li><a href="contact.html">Бронирование</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li>ул. Приморская, 12</li>
+            <li><a href="tel:+9967001234567">+996 700 123-45-67</a></li>
+            <li><a href="mailto:stay@geeks-hotel.kg">stay@aurora-hotel.kg</a></li>
+            <li>Ресепшн 24/7</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Geeks Hotel. Учебный шаблон.</span>
+        <span>Фотографии: Unsplash</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ЛАЙТБОКС -->
+  <div class="lightbox">
+    <button class="lightbox-close" aria-label="Закрыть">&times;</button>
+    <img src="" alt="">
+  </div>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
