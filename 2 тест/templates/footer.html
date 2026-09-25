@@ -1,0 +1,31 @@
+<footer class="footer">
+    <div class="container footer__inner">
+        <div class="footer__col">
+            <a href="{% url 'pages:home' %}" class="logo">
+                {% if site_settings and site_settings.logo %}
+                    <img class="logo__image" src="{{ site_settings.logo.url }}" alt="{{ site_settings.title }}">
+                {% else %}
+                    <span class="logo__mark">◆</span>
+                {% endif %}
+                <span class="logo__text">{% if site_settings %}{{ site_settings.title }}{% else %}AUREUM<span>MOTORS</span>{% endif %}</span>
+            </a>
+            <p class="footer__desc">{% if site_settings %}{{ site_settings.description }}{% else %}Премиальный автосалон с 2009 года. Эксклюзивные автомобили, прозрачные сделки, сервис мирового уровня.{% endif %}</p>
+        </div>
+        <div class="footer__col">
+            <h4 class="footer__title">Навигация</h4>
+            <a href="{% url 'pages:home' %}#models">Модели</a>
+            <a href="{% url 'pages:catalog' %}">Каталог</a>
+            <a href="{% url 'pages:catalog' %}#order">Заявка</a>
+        </div>
+        <div class="footer__col">
+            <h4 class="footer__title">Контакты</h4>
+            <a href="tel:{% if site_settings %}{{ site_settings.phone }}{% else %}+996700112233{% endif %}">{% if site_settings %}{{ site_settings.phone }}{% else %}+996 (700) 11-22-33{% endif %}</a>
+            <a href="mailto:{% if site_settings %}{{ site_settings.email }}{% else %}sales@aureum.motors{% endif %}">{% if site_settings %}{{ site_settings.email }}{% else %}sales@aureum.motors{% endif %}</a>
+            <p>{% if site_settings %}{{ site_settings.address }}{% else %}г. Бишкек, пр. Чуй, 158{% endif %}</p>
+        </div>
+    </div>
+    <div class="container footer__bottom">
+        <span>© 2026 AUREUM Motors. Все права защищены.</span>
+        <span>Сделано с заботой о деталях</span>
+    </div>
+</footer>

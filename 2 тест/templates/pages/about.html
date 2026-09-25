@@ -1,0 +1,15 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}О проекте — AUREUM Motors{% endblock %}
+
+{% block content %}
+<section class="section section--alt">
+    <div class="container about">
+        <div class="about__content" data-reveal>
+            <span class="section__label">О проекте</span>
+            <h1 class="section__title">{{ site_settings.title|default:'AUREUM Motors' }}</h1>
+            <p class="section__sub">{{ site_settings.description|default:'Премиальный автосалон с прозрачными сделками и сервисом мирового уровня.' }}</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

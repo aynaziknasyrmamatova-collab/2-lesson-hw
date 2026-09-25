@@ -1,0 +1,111 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}AUREUM Motors — Премиальный автосалон в Бишкеке{% endblock %}
+
+{% block content %}
+        <!-- HERO -->
+        <section class="hero" id="hero-slider">
+            {% for slide in slides %}
+            <div class="hero__slide{% if forloop.first %} hero__slide--active{% endif %}" data-slide>
+                <div class="hero__bg" style="background-image:url('{{ slide.image_url }}')"></div>
+                <div class="container hero__inner">
+                    <div class="hero__content" data-reveal>
+                        <span class="badge">★ Официальный дилер премиум-класса</span>
+                        <h1 class="hero__title">{{ slide.title }}</h1>
+                        <p class="hero__text">{{ slide.description }}</p>
+                        <div class="hero__actions">
+                            <a href="{{ slide.button_url }}" class="btn btn--primary">{{ slide.button_text }}</a>
+                            <a href="{% url 'pages:catalog' %}#order" class="btn btn--ghost">Записаться на тест-драйв</a>
+                        </div>
+                        <div class="hero__stats">
+                            <div class="stat"><b>{{ site_settings.years_on_market|default:'15+' }}</b><span>лет на рынке</span></div>
+                            <div class="stat"><b>{{ site_settings.cars_in_stock|default:'200+' }}</b><span>авто в наличии</span></div>
+                            <div class="stat"><b>{{ site_settings.happy_clients|default:'4 800' }}</b><span>довольных клиентов</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% if slides|length > 1 %}
+            <div class="hero__controls" aria-label="Слайды">
+                {% for slide in slides %}
+                <button class="hero__dot{% if forloop.first %} hero__dot--active{% endif %}" type="button" data-slide-button="{{ forloop.counter0 }}" aria-label="Слайд {{ forloop.counter }}"></button>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- MODELS -->
+        <section class="section" id="models">
+            <div class="container">
+                <div class="section__head" data-reveal>
+                    <span class="section__label">Витрина</span>
+                    <h2 class="section__title">Популярные модели</h2>
+                    <p class="section__sub">Подобрали автомобили, которые выбирают чаще всего</p>
+                </div>
+
+                <div class="cards">
+                    {% for service in services %}
+                    <article class="card" data-reveal>
+                        <div class="card__media">
+                            <img src="{{ service.image_url }}" alt="{{ service.title }}">
+                            <span class="card__tag">В наличии</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="card__top">
+                                <h3 class="card__title">{{ service.title }}</h3>
+                                <span class="card__price">{{ service.price }}</span>
+                            </div>
+                            <ul class="card__specs"><li>{{ service.description }}</li></ul>
+                            <a href="{% url 'pages:catalog' %}#order" class="btn btn--block">Узнать подробнее</a>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <p>Автомобили пока не добавлены.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section section--alt" id="about">
+            <div class="container about">
+                <div class="about__media" data-reveal>
+                    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=900&q=80" alt="Шоурум AUREUM Motors">
+                </div>
+                <div class="about__content" data-reveal>
+                    <span class="section__label">Почему мы</span>
+                    <h2 class="section__title">Покупка авто без рисков и нервов</h2>
+                    <p class="section__sub">Каждый автомобиль проходит 120-точечную проверку. Вы получаете полную историю и юридическую чистоту сделки.</p>
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature__icon">✓</div>
+                            <div><h4>Проверенная история</h4><p>Полный отчёт по VIN и сервисной книжке</p></div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature__icon">⚡</div>
+                            <div><h4>Кредит за 15 минут</h4><p>Одобрение от 6 банков-партнёров</p></div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature__icon">↻</div>
+                            <div><h4>Trade-in</h4><p>Обмен вашего авто по честной цене</p></div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature__icon">★</div>
+                            <div><h4>Гарантия</h4><p>До 2 лет на двигатель и КПП</p></div>
+                        </div>
+                    </div>
+                    <a href="{% url 'pages:catalog' %}" class="btn btn--primary">Перейти в каталог</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta">
+            <div class="container cta__inner" data-reveal>
+                <h2>Готовы выбрать автомобиль мечты?</h2>
+                <p>Оставьте заявку — менеджер подберёт варианты под ваш бюджет за 30 минут.</p>
+                <a href="{% url 'pages:catalog' %}#order" class="btn btn--primary btn--lg">Оставить заявку</a>
+            </div>
+        </section>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Контакты — AUREUM Motors{% endblock %}
+
+{% block content %}
+<section class="section section--alt">
+    <div class="container">
+        <span class="section__label">Контакты</span>
+        <h1 class="section__title">Свяжитесь с нами</h1>
+        <div class="features">
+            <div class="feature"><div class="feature__icon">☎</div><div><h4>Телефон</h4><p>{{ site_settings.phone|default:'+996 (700) 11-22-33' }}</p></div></div>
+            <div class="feature"><div class="feature__icon">@</div><div><h4>Email</h4><p>{{ site_settings.email|default:'sales@aureum.motors' }}</p></div></div>
+            <div class="feature"><div class="feature__icon">⌖</div><div><h4>Адрес</h4><p>{{ site_settings.address|default:'г. Бишкек, пр. Чуй, 158' }}</p></div></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

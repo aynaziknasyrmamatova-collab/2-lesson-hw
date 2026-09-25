@@ -1,0 +1,128 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}Каталог автомобилей — AUREUM Motors{% endblock %}
+
+{% block content %}
+        <!-- PAGE HEAD -->
+        <section class="pagehead">
+            <div class="container">
+                <span class="badge">Каталог · 6 автомобилей в наличии</span>
+                <h1 class="pagehead__title">Каталог автомобилей</h1>
+                <p class="pagehead__sub">Выберите автомобиль и оставьте заявку — мы организуем тест-драйв в удобное время.</p>
+            </div>
+        </section>
+
+        <!-- FILTERS -->
+        <section class="filters">
+            <div class="container filters__inner">
+                <button class="chip chip--active" data-filter="all">Все</button>
+                <button class="chip" data-filter="suv">Внедорожники</button>
+                <button class="chip" data-filter="sedan">Седаны</button>
+                <button class="chip" data-filter="electric">Электро</button>
+            </div>
+        </section>
+
+        <!-- CATALOG GRID -->
+        <section class="section section--tight">
+            <div class="container">
+                <div class="cards" id="catalog-grid">
+                    {% for service in services %}
+                    <article class="card" data-category="{{ service.category }}" data-reveal>
+                        <div class="card__media">
+                            <img src="{{ service.image_url }}" alt="{{ service.title }}">
+                            <span class="card__tag">В наличии</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="card__top"><h3 class="card__title">{{ service.title }}</h3><span class="card__price">{{ service.price }}</span></div>
+                            <ul class="card__specs"><li>{{ service.description }}</li></ul>
+                            <a href="#order" class="btn btn--block js-pick" data-car="{{ service.title }}">Оставить заявку</a>
+                        </div>
+                    </article>
+                    {% empty %}
+                    <p class="empty">Автомобили пока не добавлены.</p>
+                    {% endfor %}
+                </div>
+                <p class="empty" id="empty" hidden>В этой категории пока нет автомобилей.</p>
+            </div>
+        </section>
+
+        <!-- ORDER FORM -->
+        <section class="section section--alt" id="order">
+            <div class="container order">
+                <div class="order__info" data-reveal>
+                    <span class="section__label">Заявка</span>
+                    <h2 class="section__title">Оставьте заявку на автомобиль</h2>
+                    <p class="section__sub">Заполните форму — менеджер свяжется с вами в течение 15 минут и согласует тест-драйв.</p>
+                    <ul class="order__list">
+                        <li><span>✓</span> Бесплатная консультация</li>
+                        <li><span>✓</span> Подбор по бюджету</li>
+                        <li><span>✓</span> Расчёт кредита и trade-in</li>
+                    </ul>
+                    <div class="order__contacts">
+                        <a href="tel:+996700112233">+996 (700) 11-22-33</a>
+                        <a href="mailto:sales@aureum.motors">sales@aureum.motors</a>
+                    </div>
+                </div>
+
+                <form class="form" id="order-form" novalidate>
+                    <div class="form__row">
+                        <label class="field">
+                            <span>Ваше имя *</span>
+                            <input type="text" name="name" placeholder="Иван Иванов" required>
+                            <em class="field__error">Введите имя</em>
+                        </label>
+                        <label class="field">
+                            <span>Телефон *</span>
+                            <input type="tel" name="phone" placeholder="+996 (___) __-__-__" required>
+                            <em class="field__error">Введите корректный телефон</em>
+                        </label>
+                    </div>
+
+                    <div class="form__row">
+                        <label class="field">
+                            <span>Email</span>
+                            <input type="email" name="email" placeholder="you@mail.com">
+                            <em class="field__error">Проверьте email</em>
+                        </label>
+                        <label class="field">
+                            <span>Интересующий автомобиль</span>
+                            <select name="car" id="car-select">
+                                <option value="">— Выберите модель —</option>
+                                <option>Mercedes-Benz GLE</option>
+                                <option>BMW X6 M</option>
+                                <option>Porsche Taycan</option>
+                                <option>Audi A7 Sportback</option>
+                                <option>Tesla Model S Plaid</option>
+                                <option>BMW 530i M Sport</option>
+                            </select>
+                            <em class="field__error"></em>
+                        </label>
+                    </div>
+
+                    <fieldset class="field field--radio">
+                        <span>Удобный способ связи</span>
+                        <div class="radios">
+                            <label><input type="radio" name="contact" value="phone" checked><i></i>Звонок</label>
+                            <label><input type="radio" name="contact" value="whatsapp"><i></i>WhatsApp</label>
+                            <label><input type="radio" name="contact" value="email"><i></i>Email</label>
+                        </div>
+                    </fieldset>
+
+                    <label class="field">
+                        <span>Комментарий</span>
+                        <textarea name="message" rows="4" placeholder="Например: интересует тест-драйв в субботу"></textarea>
+                    </label>
+
+                    <label class="checkbox">
+                        <input type="checkbox" name="agree" required>
+                        <i></i>
+                        <span>Согласен на обработку персональных данных</span>
+                        <em class="field__error">Необходимо согласие</em>
+                    </label>
+
+                    <button type="submit" class="btn btn--primary btn--lg btn--block">Отправить заявку</button>
+                    <p class="form__success" id="form-success" hidden>✓ Спасибо! Заявка отправлена, менеджер скоро свяжется с вами.</p>
+                </form>
+            </div>
+        </section>
+{% endblock %}

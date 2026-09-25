@@ -1,0 +1,21 @@
+<header class="header" id="top">
+    <div class="container header__inner">
+        <a href="{% url 'pages:home' %}" class="logo">
+            {% if site_settings and site_settings.logo %}
+                <img class="logo__image" src="{{ site_settings.logo.url }}" alt="{{ site_settings.title }}">
+            {% else %}
+                <span class="logo__mark">◆</span>
+            {% endif %}
+            <span class="logo__text">{% if site_settings %}{{ site_settings.title }}{% else %}AUREUM<span>MOTORS</span>{% endif %}</span>
+        </a>
+        <nav class="nav" id="nav">
+            <a href="{% url 'pages:home' %}" class="nav__link">Главная</a>
+            <a href="{% url 'pages:about' %}" class="nav__link">О проекте</a>
+            <a href="{% url 'pages:services' %}" class="nav__link">Услуги</a>
+            <a href="{% url 'pages:contacts' %}" class="nav__link">Контакты</a>
+        </nav>
+        <button class="burger" id="burger" aria-label="Меню">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
