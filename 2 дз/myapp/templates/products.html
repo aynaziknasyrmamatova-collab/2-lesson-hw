@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Большой объем данных в Django</title>
+    <style>
+        body { font-family: sans-serif; margin: 30px; background: #f5f7fb; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e1e8ed; }
+        .card h3 { margin-top: 0; color: #1e293b; }
+        .pagination { margin-top: 30px; display: flex; justify-content: center; gap: 15px; background: white; padding: 15px; border-radius: 8px; }
+        .pagination a { text-decoration: none; color: #2563eb; font-weight: bold; padding: 8px 16px; border: 1px solid #e2e8f0; border-radius: 6px; }
+        .pagination a:hover { background: #2563eb; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Отображение большого объема данных через &lt;template&gt;</h2>
+    
+    <div id="data-container" class="grid"></div>
+
+    <!-- Пагинация -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Вперед</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+<template id="card-template">
+    <div class="card">
+        <h3 class="card-title"></h3>
+        <p class="card-desc"></p>
+    </div>
+</template>
+
+{{ products_list|json_script:"js-products-data" }}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        const data = JSON.parse(document.getElementById('js-products-data').textContent);
+        const container = document.getElementById('data-container');
+        const template = document.getElementById('card-template');
+        
+        const fragment = document.createDocumentFragment();
+
+        data.forEach(item => {
+            const clone = template.content.cloneNode(true);
+            clone.querySelector('.card-title').textContent = item.title;
+            clone.querySelector('.card-desc').textContent = item.description;
+        
+            fragment.appendChild(clone);
+        });
+
+        container.appendChild(fragment);
+    });
+</script>
+</body>
+</html>
