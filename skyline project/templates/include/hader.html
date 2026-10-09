@@ -1,0 +1,18 @@
+{%header.html%}
+r class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="logo">
+       <a href="index.html" class="logo">
+      {% if settings.logo %}
+      <img src="{{ settings.logo.url }}" alt="{{ settings.title }}" class="logo__img" />
+      {% else %}
+      <span class="logo__icon">✈</span>
+      {% endif %}
+      <span class="logo__text">{{ settings.title|default:"SkyLine" }}</span>
+      </a>
+      <a href="contacts.html" class="btn btn--primary header__btn">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>

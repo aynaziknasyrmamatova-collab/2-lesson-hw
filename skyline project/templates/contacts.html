@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyLine — Контакты</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+ {% include "include/header.html" %}
+
+  <!-- Page hero -->
+  <section class="pagehead">
+    <div class="container">
+      <span class="hero__badge reveal">Контакты</span>
+      <h1 class="pagehead__title reveal">Мы всегда на связи</h1>
+      <p class="pagehead__text reveal">
+        Остались вопросы? Напишите нам или позвоните — поддержка работает 24/7.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact cards -->
+  <section class="section">
+    <div class="container contact-cards">
+      <div class="ccard reveal">
+        <span class="ccard__ic">📞</span>
+        <h3>Телефон</h3>
+        <a href="tel:+78001234567">{{settings.phone}}</a>
+        <p>Звонок бесплатный по всей стране</p>
+      </div>
+      <div class="ccard reveal">
+        <span class="ccard__ic">✉</span>
+        <h3>Email</h3>
+        <a href="mailto:hello@skyline.aero">{{settings.email}}</a>
+        <p>Ответим в течение часа</p>
+      </div>
+      <div class="ccard reveal">
+        <span class="ccard__ic">📍</span>
+        <h3>Офис</h3>
+        <a href="#map">{{settings.address}}</a>
+        <p>Пн–Вс, 09:00 – 21:00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form + map -->
+  <section class="section section--alt">
+    <div class="container contact">
+      <div class="contact__form-wrap reveal">
+        <span class="eyebrow">Форма обратной связи</span>
+        <h2 class="section__title">Напишите нам</h2>
+        <form class="contact__form" id="contactForm">
+          <div class="field">
+            <label>Имя</label>
+            <input type="text" name="name" placeholder="Ваше имя" required />
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@mail.com" required />
+          </div>
+          <div class="field">
+            <label>Телефон</label>
+            <input type="tel" name="phone" placeholder="+7 ___ ___-__-__" />
+          </div>
+          <div class="field">
+            <label>Сообщение</label>
+            <textarea name="message" rows="4" placeholder="Чем можем помочь?" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Отправить</button>
+          <p class="form__status" id="formStatus"></p>
+        </form>
+      </div>
+      <div class="contact__map reveal" id="map">
+        <iframe
+          src="https://www.google.com/maps?q=Bishkek&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Карта"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__col">
+        <a href="index.html" class="logo logo--light">
+          <span class="logo__icon">✈</span><span class="logo__text">Sky<strong>Line</strong></span>
+        </a>
+        <p>Авиакомпания нового поколения. Летаем туда, где вас ждут.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Навигация</h5>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <div class="footer__col">
+        <h5>Контакты</h5>
+        <a href="tel:+78001234567">+7 800 123-45-67</a>
+        <a href="mailto:hello@skyline.aero">hello@skyline.aero</a>
+        <p>Бишкек, проспект Манаса 40</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 SkyLine. Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{settings}} — {{settings.descriptions}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+  <!-- Header -->
+  {% include 'include/header.html'%}
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=2400&q=80')"></div>
+    <div class="hero__overlay"></div>
+    <div class="container hero__inner">
+      <div class="hero__content reveal">
+        <span class="hero__badge">привет </span>
+        <h1 class="hero__title"Удачи тебе в полетах</span></h1>
+        <p class="hero__text">
+          пока
+        </p>
+        <div class="hero__actions">
+          <a href="contacts.html" class="btn btn--primary">Найти рейс</a>
+          <a href="about.html" class="btn btn--ghost btn--ghost-light">О компании</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search card -->
+    <div class="container">
+      <form class="search reveal" onsubmit="return false;">
+        <div class="search__field">
+          <label>Откуда</label>
+          <input type="text" placeholder="Бишкек" />
+        </div>
+        <div class="search__field">
+          <label>Куда</label>
+          <input type="text" placeholder="Стамбул" />
+        </div>
+        <div class="search__field">
+          <label>Дата</label>
+          <input type="date" />
+        </div>
+        <div class="search__field">
+          <label>Пассажиры</label>
+          <input type="number" min="1" value="1" />
+        </div>
+        <button class="btn btn--primary search__btn">Поиск рейсов</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section stats">
+    <div class="container stats__grid">
+      <div class="stat reveal"><span class="stat__num">{{numbers.age}}+</span><span class="stat__label">лет в небе</span></div>
+      <div class="stat reveal"><span class="stat__num">{{numbers.Destinations}}</span><span class="stat__label">направлений</span></div>
+      <div class="stat reveal"><span class="stat__num">{{numbers.people}}</span><span class="stat__label">пассажиров в год</span></div>
+      <div class="stat reveal"><span class="stat__num">{{numbers.reis}}</span><span class="stat__label">рейсов вовремя</span></div>
+    </div>
+  </section>
+
+  <!-- Destinations -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Направления</span>
+        <h2 class="section__title">Популярные маршруты</h2>
+        <p class="section__sub">Выбирай город мечты — мы доставим тебя с комфортом.</p>
+      </div>
+      <div class="cards">
+        {% for i in tour%}
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('{{i.image.url}}')"></div>
+          <div class="card__body">
+            <div class="card__row"><h3>{{i.title}}</h3><span class="card__price">{{i.price}}</span></div>
+            <p>{{i.subtitle}}</p>
+          </div>
+        </article>
+        {% endfor %}
+        </div>
+      </div>
+    </section>
+  <!-- Features -->
+  <section class="section section--alt">
+    <div class="container features">
+      <div class="features__img reveal" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=80')"></div>
+      <div class="features__content reveal">
+        <span class="eyebrow">Почему мы</span>
+        <h2 class="section__title">Сервис, в который влюбляешься</h2>
+        <ul class="features__list">
+          <li><span class="features__ic">★</span><div><h4>Комфорт на борту</h4><p>Просторные кресла, питание и развлечения в каждом классе.</p></div></li>
+          <li><span class="features__ic">⏱</span><div><h4>Точность рейсов</h4><p>98% вылетов строго по расписанию — мы ценим ваше время.</p></div></li>
+          <li><span class="features__ic">♥</span><div><h4>Забота о пассажирах</h4><p>Поддержка 24/7 на родном языке в любой точке мира.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta reveal">
+        <h2>Готовы к новому путешествию?</h2>
+        <p>Подпишитесь и получайте лучшие предложения на билеты первыми.</p>
+        <form class="cta__form" onsubmit="return false;">
+          <input type="email" placeholder="Ваш email" />
+          <button class="btn btn--primary">Подписаться</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__col">
+        <a href="index.html" class="logo logo--light">
+          <span class="logo__icon">✈</span><span class="logo__text">Sky<strong>Line</strong></span>
+        </a>
+        <p>Авиакомпания нового поколения. Летаем туда, где вас ждут.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Навигация</h5>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <div class="footer__col">
+        <h5>Контакты</h5>
+        <a href="tel:+78001234567">+7 800 123-45-67</a>
+        <a href="mailto:hello@skyline.aero">hello@skyline.aero</a>
+        <p>Бишкек, проспект Манаса 40</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 SkyLine. Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

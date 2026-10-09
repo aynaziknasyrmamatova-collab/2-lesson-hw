@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyLine — О нас</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2" />
+</head>
+<body>
+ {% include 'include/header.html' %}
+
+  <!-- Page hero -->
+  <section class="pagehead">
+    <div class="container">
+      <span class="hero__badge reveal">О компании</span>
+      <h1 class="pagehead__title reveal">Мы соединяем людей и города</h1>
+      <p class="pagehead__text reveal">
+        SkyLine — это команда профессионалов, влюблённых в небо. С 2011 года мы
+        делаем перелёты доступнее, комфортнее и безопаснее.
+      </p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container about">
+      <div class="about__img reveal" style="background-image:url('https://images.unsplash.com/photo-1556388158-158ea5ccacbd?auto=format&fit=crop&w=1000&q=80')"></div>
+      <div class="about__content reveal">
+        <span class="eyebrow">Наша история</span>
+        <h2 class="section__title">Путь длиною в 15 лет</h2>
+        <p>
+          Всё началось с одного самолёта и большой мечты — сделать путешествия
+          доступными каждому. Сегодня наш парк насчитывает более 40 современных
+          лайнеров, а маршрутная сеть охватывает 120 городов в 38 странах.
+        </p>
+        <p>
+          Мы инвестируем в технологии, обучение экипажей и заботу о пассажирах,
+          чтобы каждый полёт был безопасным и приятным.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Ценности</span>
+        <h2 class="section__title">Что нами движет</h2>
+        <p class="section__sub">Принципы, которым мы следуем в каждом рейсе.</p>
+      </div>
+      <div class="values">
+        <div class="value reveal"><span class="value__ic">🛡</span><h3>Безопасность</h3><p>Строгие стандарты и регулярное обслуживание авиапарка.</p></div>
+        <div class="value reveal"><span class="value__ic">🤝</span><h3>Доверие</h3><p>Честные цены и прозрачные условия без скрытых платежей.</p></div>
+        <div class="value reveal"><span class="value__ic">🌍</span><h3>Экология</h3><p>Современные двигатели и снижение углеродного следа.</p></div>
+        <div class="value reveal"><span class="value__ic">✨</span><h3>Сервис</h3><p>Внимание к деталям и забота на каждом этапе пути.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Команда</span>
+        <h2 class="section__title">Люди, которые поднимают нас в небо</h2>
+      </div>
+      <div class="cards cards--team">
+        <article class="member reveal">
+          <div class="member__img" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80')"></div>
+          <h3>Алексей Смирнов</h3><span>CEO &amp; основатель</span>
+        </article>
+        <article class="member reveal">
+          <div class="member__img" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80')"></div>
+          <h3>Мария Иванова</h3><span>Директор по сервису</span>
+        </article>
+        <article class="member reveal">
+          <div class="member__img" style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80')"></div>
+          <h3>Дмитрий Орлов</h3><span>Шеф-пилот</span>
+        </article>
+        <article class="member reveal">
+          <div class="member__img" style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80')"></div>
+          <h3>Елена Ким</h3><span>Глава экипажа</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta reveal">
+        <h2>Хотите лететь с нами?</h2>
+        <p>Выберите направление и забронируйте билет прямо сейчас.</p>
+        <a href="contacts.html" class="btn btn--primary">Связаться с нами</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__col">
+        <a href="index.html" class="logo logo--light">
+          <span class="logo__icon">✈</span><span class="logo__text">Sky<strong>Line</strong></span>
+        </a>
+        <p>Авиакомпания нового поколения. Летаем туда, где вас ждут.</p>
+      </div>
+      <div class="footer__col">
+        <h5>Навигация</h5>
+        <a href="index.html">Главная</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <div class="footer__col">
+        <h5>Контакты</h5>
+        <a href="tel:+78001234567">+7 800 123-45-67</a>
+        <a href="mailto:hello@skyline.aero">hello@skyline.aero</a>
+        <p>Бишкек, проспект Манаса 40</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">© 2026 SkyLine. Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

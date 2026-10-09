@@ -1,0 +1,22 @@
+{% load static %}
+<header class="header" id="header">
+    <div class="container header__inner">
+      <a href="{% url 'index-page' %}" class="logo">
+        {% if settings.logo %}
+          <img src="{{ settings.logo.url }}" alt="{{ settings.title }}" class="logo__img" />
+        {% else %}
+          <span class="logo__icon">✈</span>
+        {% endif %}
+        <span class="logo__text">{{ settings.title|default:"SkyLine" }}</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="{% url 'index-page' %}" class="nav__link nav__link--active">Главная</a>
+        <a href="{% url 'about-page' %}" class="nav__link">О нас</a>
+        <a href="{% url 'contacts-page' %}" class="nav__link">Контакты</a>
+      </nav>
+      <a href="contacts.html" class="btn btn--primary header__btn">Купить билет</a>
+      <button class="burger" id="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
