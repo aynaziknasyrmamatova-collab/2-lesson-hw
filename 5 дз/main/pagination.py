@@ -1,5 +1,5 @@
-from rest_framework import PAgeNumberPagination
-class ZonePagination(PAgeNumberPagination):
+from rest_framework import PageNumberPagination
+class ZonePagination(PageNumberPagination):
     page_size=4
     page_size_query_param='size'
 
