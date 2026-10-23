@@ -1,0 +1,1119 @@
+openapi: 3.0.3
+info:
+  title: Smart Coworking API
+  version: 1.0.0
+  description: 'API для просмотра комнат, регистрации пользователей, управления профилем
+    и оплаты бронирований с внутреннего баланса. Для защищённых методов используйте
+    токен: Authorization: Token <token>.'
+paths:
+  /api/auth/token/:
+    post:
+      operationId: auth_token_create
+      description: 'Обменивает имя пользователя и пароль на токен Передавайте токен
+        защищённым запросам как Authorization: Token <token>.'
+      tags:
+      - Авторизация
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRequestRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequestRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: ''
+  /api/bookings/:
+    get:
+      operationId: bookings_list
+      description: Возвращает только бронирования текущего пользователя
+      parameters:
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -created_at
+          - -hours
+          - -starts_at
+          - -total_price
+          - created_at
+          - hours
+          - starts_at
+          - total_price
+        description: Поле сортировки; префикс - задаёт обратный порядок
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Номер страницы
+      - in: query
+        name: room
+        schema:
+          type: integer
+        description: Фильтр по идентификатору комнаты
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Поиск по названию комнаты
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - cancelled
+          - confirmed
+          - pending
+        description: Фильтр по статусу бронирования
+      tags:
+      - Бронирования
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBookingList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Необходима авторизация по токену
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Некорректный идентификатор фильтра или сортировки
+    post:
+      operationId: bookings_create
+      description: Создаёт ожидающее подтверждения бронирование. Укажите комнату и
+        временные отметки starts_at и ends_at в ISO 8601. Продолжительность — от 1
+        до 12 часов. Стоимость вычисляется сервером и списывается с баланса в одной
+        транзакции
+      tags:
+      - Бронирования
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Ошибки полей/интервала, недоступная или занятая комната, недостаточный
+            баланс или превышение максимальной стоимости
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Интервал уже занят
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Необходима авторизация по токену.
+  /api/bookings/{id}/:
+    get:
+      operationId: bookings_retrieve
+      description: Получает бронирование только текущего пользователя.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Бронирования
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Booking'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Бронирование не найдено.
+  /api/bookings/{id}/cancel/:
+    post:
+      operationId: bookings_cancel
+      description: Отменяет собственное ожидающее или подтверждённое бронирование
+        и возвращает списанную сумму на баланс пользователя.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Бронирования
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingStatus'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Собственное бронирование не найдено.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Бронирование уже отменено.
+  /api/bookings/{id}/confirm/:
+    post:
+      operationId: bookings_confirm
+      description: Подтверждает ожидающее бронирование. Доступно только администраторам;
+        доступность комнаты и отсутствие пересечений проверяются повторно.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Бронирования
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingStatus'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация администратора.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Только администратор может подтвердить бронирование.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Бронирование не найдено.
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Бронирование уже обработано или интервал недоступен.
+  /api/profile/:
+    get:
+      operationId: profile_retrieve
+      description: Возвращает профиль пользователя из токена авторизации.
+      tags:
+      - Пользователи
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Необходима авторизация по токену.
+    put:
+      operationId: profile_update
+      description: Обновляет номер телефона собственного профиля. Баланс и имя пользователя
+        доступны только для чтения.
+      tags:
+      - Пользователи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProfileRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Ошибка валидации данных профиля.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Необходима авторизация по токену.
+    patch:
+      operationId: profile_partial_update
+      description: Частично обновляет номер телефона собственного профиля. Баланс
+        и имя пользователя доступны только для чтения.
+      tags:
+      - Пользователи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProfileRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Ошибка валидации данных профиля.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Необходима авторизация по токену.
+  /api/register/:
+    post:
+      operationId: users_register
+      description: Создаёт пользователя и профиль с указанным номером телефона. Новый
+        внутренний баланс равен нулю. Пароль передаётся в JSON и сохраняется в виде
+        хеша.
+      tags:
+      - Пользователи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Registration'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Ошибка валидации имени пользователя, телефона или пароля.
+  /api/rooms/:
+    get:
+      operationId: rooms_list
+      description: Публично возвращает доступные комнаты. Администратор видит все
+        комнаты. Результат содержит не более 10 записей на странице и кэшируется на
+        60 секунд.
+      parameters:
+      - in: query
+        name: capacity
+        schema:
+          type: integer
+        description: Точная вместимость; положительное целое число
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -price
+          - price
+        description: Сортировка по почасовой стоимости.
+      - in: query
+        name: page
+        schema:
+          type: integer
+        description: Номер страницы (по 10 записей).
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Поиск по названию комнаты без учёта регистра.
+      tags:
+      - Комнаты
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRoomList'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Некорректная вместимость или параметр сортировки.
+    post:
+      operationId: rooms_create
+      description: Создаёт комнату. Требуются права администратора
+      tags:
+      - Комнаты
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Поля комнаты не прошли валидацию
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация администратора
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Пользователь не является администратором
+  /api/rooms/{id}/:
+    get:
+      operationId: rooms_retrieve
+      description: Получает сведения о комнате. Недоступные комнаты видны только администратору.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this комната.
+        required: true
+      tags:
+      - Комнаты
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Комната не найдена или недоступна посетителю
+    put:
+      operationId: rooms_update
+      description: Полностью изменяет комнату. Требуются права администратора
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this комната.
+        required: true
+      tags:
+      - Комнаты
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RoomRequest'
+        required: true
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Поля комнаты не прошли валидацию
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация администратора
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Пользователь не является администратором
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Комната не найдена
+    patch:
+      operationId: rooms_partial_update
+      description: Частично изменяет комнату. Требуются права администратора
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this комната.
+        required: true
+      tags:
+      - Комнаты
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRoomRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRoomRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRoomRequest'
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationErrorResponse'
+          description: Поля комнаты не прошли валидацию
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация администратора
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Пользователь не является администратором
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Комната не найдена
+    delete:
+      operationId: rooms_destroy
+      description: Удаляет комнату. Требуются права администратора; комнату с бронированиями
+        удалить нельзя
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this комната.
+        required: true
+      tags:
+      - Комнаты
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      responses:
+        '204':
+          description: Комната удалена.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Требуется авторизация администратора
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Пользователь не является администратором
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Комната не найдена
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+          description: Нельзя удалить комнату с бронированиями
+components:
+  schemas:
+    Booking:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        room:
+          type: integer
+          title: Комната
+        room_name:
+          type: string
+          readOnly: true
+        starts_at:
+          type: string
+          format: date-time
+        ends_at:
+          type: string
+          format: date-time
+        hours:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,2}(?:\.\d{0,4})?$
+          readOnly: true
+          title: Количество часов
+        price_per_hour:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Стоимость часа при бронировании
+        total_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          readOnly: true
+          title: Итоговая стоимость
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Статус
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Создано
+      required:
+      - created_at
+      - ends_at
+      - hours
+      - id
+      - price_per_hour
+      - room
+      - room_name
+      - starts_at
+      - status
+      - total_price
+    BookingRequest:
+      type: object
+      properties:
+        room:
+          type: integer
+          title: Комната
+        starts_at:
+          type: string
+          format: date-time
+        ends_at:
+          type: string
+          format: date-time
+      required:
+      - ends_at
+      - room
+      - starts_at
+    BookingStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+          title: Статус
+      required:
+      - id
+      - status
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    PaginatedBookingList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Booking'
+    PaginatedRoomList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Room'
+    PatchedProfileRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+          minLength: 1
+          title: Номер телефона
+          maxLength: 50
+    PatchedRoomRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 50
+        description:
+          type: string
+          minLength: 1
+          title: Описание
+        capacity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 1
+          format: int64
+          title: Вместимость
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость одного часа
+        is_available:
+          type: boolean
+          title: Доступна
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+        phone:
+          type: string
+          title: Номер телефона
+          maxLength: 50
+        balance:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          readOnly: true
+      required:
+      - balance
+      - id
+      - phone
+      - username
+    ProfileRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+          minLength: 1
+          title: Номер телефона
+          maxLength: 50
+      required:
+      - phone
+    Registration:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+      required:
+      - id
+      - username
+    RegistrationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+          minLength: 8
+        phone:
+          type: string
+          writeOnly: true
+          minLength: 1
+          maxLength: 50
+      required:
+      - password
+      - phone
+      - username
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          title: Название
+          maxLength: 50
+        description:
+          type: string
+          title: Описание
+        capacity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 1
+          format: int64
+          title: Вместимость
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость одного часа
+        is_available:
+          type: boolean
+          title: Доступна
+      required:
+      - capacity
+      - description
+      - id
+      - name
+      - price
+    RoomRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          title: Название
+          maxLength: 50
+        description:
+          type: string
+          minLength: 1
+          title: Описание
+        capacity:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 1
+          format: int64
+          title: Вместимость
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,2})?$
+          title: Стоимость одного часа
+        is_available:
+          type: boolean
+          title: Доступна
+      required:
+      - capacity
+      - description
+      - name
+      - price
+    StatusEnum:
+      enum:
+      - pending
+      - confirmed
+      - cancelled
+      type: string
+      description: |-
+        * `pending` - Ожидает подтверждения
+        * `confirmed` - Подтверждено
+        * `cancelled` - Отменено
+    TokenRequestRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - password
+      - username
+    TokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+    ValidationErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+        name:
+          type: array
+          items:
+            type: string
+        description:
+          type: array
+          items:
+            type: string
+        capacity:
+          type: array
+          items:
+            type: string
+        price:
+          type: array
+          items:
+            type: string
+        is_available:
+          type: array
+          items:
+            type: string
+        room:
+          type: array
+          items:
+            type: string
+        hours:
+          type: array
+          items:
+            type: string
+        starts_at:
+          type: array
+          items:
+            type: string
+        ends_at:
+          type: array
+          items:
+            type: string
+        balance:
+          type: array
+          items:
+            type: string
+        status:
+          type: array
+          items:
+            type: string
+        non_field_errors:
+          type: array
+          items:
+            type: string
+        username:
+          type: array
+          items:
+            type: string
+        password:
+          type: array
+          items:
+            type: string
+        phone:
+          type: array
+          items:
+            type: string
+        ordering:
+          type: array
+          items:
+            type: string
+        page:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"
+tags:
+- name: Комнаты
+  description: Просмотр и управление комнатами.
+- name: Бронирования
+  description: Личные бронирования и оплата.
+- name: Пользователи
+  description: Регистрация и личный профиль.
+- name: Авторизация
+  description: Получение токена доступа.
